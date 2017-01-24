@@ -1,0 +1,51 @@
+
+
+start/menu: First window that the user sees.
+			is presented with four options.
+			Join Session.
+			Host Session.
+			Forge.
+			Exit.
+
+
+Join Session: Will prompt the user to enter an
+	 		  IP address of the host at the
+			  very bottom of the window.
+			  It may also ask for a password.
+			  If the session is full it will
+			  notify you and brinf you back to
+			  the start/menu window. Else, you'll
+			  enter the Player Session window.
+
+
+Host Session: Will prompt for the amount of
+	 		  players allowed to connect.
+			  Then for a password, leave
+			  blank if you dont want one.
+			  It will then bring you to a
+			  DM Session window.
+
+
+Forge: Allows users to create maps with npc's
+	   or whatever else they need to import
+	   when its time to play.
+
+
+Exit: Obviously closes the window and exits the program.
+
+
+
+
+Player Session: Allows players to view the map that the
+	   			the DM hopefully is setting up. Allows
+				them to place their character down on the
+				map and move them about. set their name
+				and such. Roll dice. Basic player stuff.
+
+
+DM Session: Have total control over everything. You have the
+   			ability to pause players commands. even move them.
+			Delete them. Create new npcs. Spawn objects. clear the map.
+			resize the map. Import maps. mute players. kick/ban players.
+			rename stuff. Basically anything.
+
