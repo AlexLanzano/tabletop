@@ -78,3 +78,21 @@ void establish_bitmaps(SDL_Renderer *renderer)
 	
 }
 
+
+
+
+
+character_container* establish_character_container()
+{
+	character_container *char_container = malloc(sizeof(character_container));
+	char_container->capacity = 16;
+	char_container->size = 0;
+	char_container->chars = malloc(sizeof(character*) * char_container->capacity);
+	return char_container;
+}
+
+void character_container_append(character_container *container, character *ch)
+{
+	container->chars[container->size++] = ch;
+}
+

@@ -1,8 +1,14 @@
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+
+#include <player.h>
+
 #define BLOCKSIZE 20
 
-#define GRID_CONSTRUCT(type, name, win_size)		\
+#define GRID_CONSTRUCT(type, name, win_size)	\
 	int size = win_size/BLOCKSIZE;				\
 	typedef struct{								\
 		int max_x;								\
@@ -29,6 +35,7 @@
 		}													\
 	}														\
 
+
 #define GRID_RENDER(name, renderer)							\
 	for(int y = 0; y < (name)->max_y; ++y){					\
 		for(int x = 0; x < (name)->max_x; ++x){				\
@@ -38,7 +45,16 @@
 
 #define BLOCK(name, y, x) (name)->blocks[y][x]	\
 
+#define GRID_UPDATE(name, renderer, char_container)			\
+	for(int i = 0; i < (char_container)->size; ++i){		\
+		BLOCK(name, (char_container)->chars[i]->y,			\
+			  (char_container)->chars[i]->x)->bitmap_id =	\
+			(char_container)->chars[i]->bitmap_id;			\
+	}														\
+
+
 SDL_Rect **phoebus;
+
 
 typedef struct{
 	int bitmap_id;
@@ -48,6 +64,11 @@ typedef struct{
 	SDL_Rect *rect;
 } block;
 
+typedef struct{
+	int capacity;
+	int size;
+	character **chars;
+} character_container;
 
 
 int render_block(SDL_Renderer *renderer, block *b);
@@ -58,8 +79,9 @@ void block_set_name(block *b, char *name);
 void block_set_texture(block *b, SDL_Texture *texture);
 void block_set_rect(block *b, SDL_Rect *rect);
 
-
 void establish_bitmaps(SDL_Renderer *renderer);
 
+character_container* establish_character_container();
+void character_container_append(character_container *container, character *ch);
 
-
+#endif

@@ -7,6 +7,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include <graphics.h>
+#include <player.h>
 
 #define TRUE  1
 #define FALSE 0
@@ -30,6 +31,8 @@ int main()
 	
 	establish_bitmaps(renderer);
 
+	character_container *ch_container = establish_character_container();
+	
 	GRID_CONSTRUCT(Grid, grid, 800);
 	GRID_INIT(grid, size, size);
 
@@ -39,15 +42,12 @@ int main()
 			BLOCK(grid, y, x)->bitmap_id = 131;
 		}		
 	}
-
-	character *alex = malloc(sizeof(character));
-	alex->x = 0;
-	alex->y = 0;
-	alex->bitmap_id = 1;
-
-
 	
-
+	player *alex = establish_player("alex");
+	player_create_character(alex, 0, 0, 1);
+	character_container_append(ch_container, alex->chars[0]);
+	
+	
 	/* Poll events */
 	SDL_Event e;
 
@@ -64,6 +64,8 @@ int main()
 
 		SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
 		SDL_RenderClear(renderer);
+		GRID_UPDATE(grid, renderer, ch_container);
+
 		GRID_RENDER(grid, renderer);
 		SDL_RenderPresent(renderer);
 	}
