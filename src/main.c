@@ -33,20 +33,27 @@ int main()
 
 	character_container *ch_container = establish_character_container();
 	
-	GRID_CONSTRUCT(Grid, grid, 800);
-	GRID_INIT(grid, size, size);
+	GRID_CONSTRUCT(Grid, grid, 40, 40);
+	GRID_INIT(grid);
 
-	for(int y = 0; y < grid->max_y; ++y){
-		for(int x = 0; x < grid->max_x; ++x){
-			BLOCK(grid, y, x)->texture = texture;
-			BLOCK(grid, y, x)->bitmap_id = 131;
-		}		
-	}
+	GRID_CONSTRUCT(Map, map, 40, 40);
+	GRID_INIT(map);
 	
+	for(int y = 0; y < map->max_y; ++y){
+		for(int x = 0; x < map->max_x; ++x){
+			BLOCK(map, y, x)->texture = texture;
+			BLOCK(map, y, x)->bitmap_id = 131;
+		}
+	}
+
+	
+	//GRID_COPY(grid, map);
 	player *alex = establish_player("alex");
 	player_create_character(alex, 0, 0, 1);
 	character_container_append(ch_container, alex->chars[0]);
-	
+
+
+	printf("%i\n", alex->focus);
 	
 	/* Poll events */
 	SDL_Event e;
@@ -59,13 +66,34 @@ int main()
 			if(e.type == SDL_QUIT){
 				is_running = FALSE;
 			}
-			
+
+			if(e.type == SDL_KEYDOWN){
+				if(e.key.keysym.sym == SDLK_w){					
+					player_move_character(alex, "n");
+				    
+				}
+				if(e.key.keysym.sym == SDLK_d){
+					player_move_character(alex, "e");
+
+				}
+				if(e.key.keysym.sym == SDLK_s){
+					player_move_character(alex, "s");
+					
+				}
+				if(e.key.keysym.sym == SDLK_a){
+					player_move_character(alex, "w");
+					
+				} 
+				
+			}	
 		}
 
+		
+		
 		SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
 		SDL_RenderClear(renderer);
+		GRID_COPY(grid, map);
 		GRID_UPDATE(grid, renderer, ch_container);
-
 		GRID_RENDER(grid, renderer);
 		SDL_RenderPresent(renderer);
 	}

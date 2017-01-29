@@ -8,20 +8,19 @@
 
 #define BLOCKSIZE 20
 
-#define GRID_CONSTRUCT(type, name, win_size)	\
-	int size = win_size/BLOCKSIZE;				\
+#define GRID_CONSTRUCT(type, name, y, x)		\
 	typedef struct{								\
-		int max_x;								\
 		int max_y;								\
-		block *blocks[size][size];				\
+		int max_x;								\
+		block *blocks[y][x];					\
 	} type;										\
 	type *name = malloc(sizeof(type));			\
+	(name)->max_y = y;							\
+	(name)->max_x = x;							\
 
-#define GRID_INIT(name, size_x, size_y)						\
-	(name)->max_x = size_x;									\
-	(name)->max_y = size_y;									\
-	for(int y = 0; y < size_y; ++y){						\
-		for(int x = 0; x < size_x; ++x){					\
+#define GRID_INIT(name)										\
+	for(int y = 0; y < (name)->max_y; ++y){					\
+		for(int x = 0; x < (name)->max_x; ++x){						\
 			(name)->blocks[y][x] = malloc(sizeof(block));	\
 			(name)->blocks[y][x]->bitmap_id = 0;			\
 			(name)->blocks[y][x]->hidden = 0;				\
@@ -42,6 +41,14 @@
 			render_block(renderer, (name)->blocks[y][x]);	\
 		}													\
 	}														\
+
+#define GRID_COPY(dst, src)												\
+	for(int y = 0; y < (dst)->max_y; ++y){								\
+		for(int x = 0; x < (dst)->max_x; ++x){							\
+			BLOCK(dst, y, x)->texture = BLOCK(src, y, x)->texture;		\
+			BLOCK(dst, y, x)->bitmap_id = BLOCK(src, y, x)->bitmap_id;	\
+		}																\
+	}																	\
 
 #define BLOCK(name, y, x) (name)->blocks[y][x]	\
 

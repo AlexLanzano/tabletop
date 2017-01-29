@@ -53,6 +53,8 @@ int player_create_character(player *p, int x, int y, int bitmap_id)
 	p->chars[char_index]->y = y;
 	p->chars[char_index]->bitmap_id = bitmap_id;
 
+	p->focus = char_index;
+	
 	return 0;
 }
 
@@ -65,7 +67,7 @@ void player_delete_character(player *p, int character_index)
 
 void player_move_character(player *p, char *direction)
 {
-	if(direction == "n"){
+	if(strcmp(direction,"n") == 0){
 		p->chars[p->focus]->y--;
 	}
 	if(direction == "ne"){
@@ -73,7 +75,7 @@ void player_move_character(player *p, char *direction)
 		p->chars[p->focus]->x++;
 		
 	}
-	if(direction == "e"){
+	if(strcmp(direction, "e") == 0){
 		p->chars[p->focus]->x++;		
 	}
 	if(direction == "se"){
@@ -81,7 +83,7 @@ void player_move_character(player *p, char *direction)
 		p->chars[p->focus]->x++;
 
 	}
-	if(direction == "s"){
+	if(strcmp(direction, "s") == 0){
 		p->chars[p->focus]->y++;
 		
 	}
@@ -90,7 +92,7 @@ void player_move_character(player *p, char *direction)
 		p->chars[p->focus]->x--;
 		
 	}
-	if(direction == "w"){
+	if(strcmp(direction, "w") == 0){
 		p->chars[p->focus]->x--;
 		
 	}
