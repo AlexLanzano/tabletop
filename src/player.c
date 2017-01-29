@@ -108,8 +108,10 @@ void player_move_character(player *p, char *direction)
 
 
 
-char* player_get_input(player *p)
+void player_get_input(player *p, char *string)
 {
+	printf("> ");
+	fgets(string, 255, stdin);
 	
 }
 

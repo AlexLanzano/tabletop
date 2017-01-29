@@ -53,13 +53,13 @@ int main()
 	character_container_append(ch_container, alex->chars[0]);
 
 
-	printf("%i\n", alex->focus);
 	
 	/* Poll events */
 	SDL_Event e;
 
 	int is_running = TRUE;
 
+	char input[256];
 	while( is_running ){
 		
 		while( SDL_PollEvent(&e) != 0 ){
@@ -83,7 +83,12 @@ int main()
 				if(e.key.keysym.sym == SDLK_a){
 					player_move_character(alex, "w");
 					
-				} 
+				}
+
+				if(e.key.keysym.sym == SDLK_RETURN){
+					player_get_input(alex, input);
+					printf("%s", input);
+				}
 				
 			}	
 		}

@@ -28,6 +28,6 @@ int player_create_character(player *p, int x, int y, int bitmap_id);
 void player_delete_character(player *p, int character_index);
 void player_move_character(player *p, char *direction);
 
-char* player_get_input(player *p);
+void player_get_input(player *p, char *string);
 
 #endif
