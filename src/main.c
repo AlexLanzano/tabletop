@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <pthread.h>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -38,7 +40,17 @@ int main()
 
 	GRID_CONSTRUCT(Map, map, 40, 40);
 	GRID_INIT(map);
+
+	//connect to server
+	//wait for incoming data
+	//process incoming data
 	
+
+
+
+	
+
+	//TEST--------------------------------------
 	for(int y = 0; y < map->max_y; ++y){
 		for(int x = 0; x < map->max_x; ++x){
 			BLOCK(map, y, x)->texture = texture;
@@ -47,11 +59,12 @@ int main()
 	}
 
 	
-	//GRID_COPY(grid, map);
 	player *alex = establish_player("alex");
 	player_create_character(alex, 0, 0, 1);
 	character_container_append(ch_container, alex->chars[0]);
+	//TEST-----------------------------------------
 
+	
 
 	
 	/* Poll events */
@@ -70,7 +83,7 @@ int main()
 			if(e.type == SDL_KEYDOWN){
 				if(e.key.keysym.sym == SDLK_w){					
 					player_move_character(alex, "n");
-				    
+				    //CMD_MOVE(alex, "n");
 				}
 				if(e.key.keysym.sym == SDLK_d){
 					player_move_character(alex, "e");
@@ -85,10 +98,6 @@ int main()
 					
 				}
 
-				if(e.key.keysym.sym == SDLK_RETURN){
-					player_get_input(alex, input);
-					printf("%s", input);
-				}
 				
 			}	
 		}
